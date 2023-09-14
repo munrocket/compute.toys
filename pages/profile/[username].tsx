@@ -25,7 +25,8 @@ async function loadShaders(username: string) {
                 `
             )
             // @ts-ignore
-            .eq('profile.username', username);
+            .eq('profile.username', username)
+            .eq('visibility', 'public');
 
         if (error && status !== 406) {
             throw error;
