@@ -243,7 +243,7 @@ export class Preprocessor {
         }
 
         const value = tokens.slice(2).join(' ');
-        if (value.includes(name)) {
+        if (this.defines.has(name)) {
             throw new WGSLError(`Cannot redefine ${name}`, lineNum);
         }
 
@@ -262,13 +262,13 @@ export class Preprocessor {
                 lineNum
             );
         }
-        if (expression.includes(name)) {
+        if (this.overrides.has(name)) {
             throw new WGSLError(`Cannot redefine ${name}`, lineNum);
         }
 
         expression = expression.slice(0, -1);
         expression = evalMathExpression(expression, lineNum);
-        this.defines.set(name, expression);
+        this.overrides.set(name, expression);
     }
 
     /**
