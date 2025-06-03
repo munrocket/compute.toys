@@ -8,11 +8,12 @@ import { theme } from 'theme/theme';
 import useAnimationFrame from 'use-animation-frame';
 
 export default function Timer() {
-    const timer = useAtomValue(timerAtom);
+    const atomicTimer = useAtomValue(timerAtom);
     const [isPlaying] = useTransientAtom(isPlayingAtom);
     const frames = useRef(0);
     const secs = useRef(0);
     const [fps, setFps] = useState(0);
+    const [timer, setTimer] = useState(0);
 
     useAnimationFrame(e => {
         if (isPlaying()) {
@@ -20,6 +21,7 @@ export default function Timer() {
             secs.current += e.delta;
             if (secs.current > 0.5) {
                 setFps(frames.current / secs.current);
+                setTimer(atomicTimer);
                 frames.current = 0;
                 secs.current = 0;
             }
